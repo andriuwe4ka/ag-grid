@@ -133,6 +133,7 @@ var GridPanel = (function (_super) {
         _this.scrollTop = -1;
         _this.nextScrollTop = -1;
         _this.verticalRedrawNeeded = false;
+        _this.scrollTimeout = null;
         return _this;
     }
     GridPanel.prototype.agWire = function (loggerFactory) {
@@ -1362,8 +1363,17 @@ var GridPanel = (function (_super) {
         this.addIEPinFix(onPinnedRightVerticalScroll, onPinnedLeftVerticalScroll);
     };
     GridPanel.prototype.onBodyScroll = function () {
-        this.onBodyHorizontalScroll();
-        this.onBodyVerticalScroll();
+        var _this = this;
+        if (this.scrollTimeout) {
+            clearTimeout(this.scrollTimeout);
+            this.scrollTimeout = null;
+        }
+        this.scrollTimeout = setTimeout(function () {
+            _this.onBodyHorizontalScroll();
+            _this.onBodyVerticalScroll();
+            clearTimeout(_this.scrollTimeout);
+            _this.scrollTimeout = null;
+        }, 333);
     };
     GridPanel.prototype.onBodyHorizontalScroll = function () {
         var scrollLeft = this.eBodyViewport.scrollLeft;

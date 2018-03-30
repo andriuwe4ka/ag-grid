@@ -117,7 +117,6 @@ const GRID_PANEL_FOR_PRINT_TEMPLATE =
             '<div class="ag-floating-bottom-container"></div>'+
         '</div>';
 
-
 export type RowContainerComponentNames =
     'fullWidth' |
     'body' |
@@ -133,7 +132,6 @@ export type RowContainerComponentNames =
     'floatingBottomFullWith';
 
 export type RowContainerComponents = { [K in RowContainerComponentNames]: RowContainerComponent };
-
 
 @Bean('gridPanel')
 export class GridPanel extends BeanStub {
@@ -228,6 +226,8 @@ export class GridPanel extends BeanStub {
     private pinningLeft: boolean;
 
     private useAnimationFrame: boolean;
+
+    private scrollTimeout: any = null;
 
     public agWire(@Qualifier('loggerFactory') loggerFactory: LoggerFactory) {
         this.logger = loggerFactory.create('GridPanel');
@@ -1616,8 +1616,16 @@ export class GridPanel extends BeanStub {
     }
 
     private onBodyScroll(): void {
-        this.onBodyHorizontalScroll();
-        this.onBodyVerticalScroll();
+        if ( this.scrollTimeout ) {
+            clearTimeout(this.scrollTimeout);
+            this.scrollTimeout = null;
+        }
+        this.scrollTimeout = setTimeout(() => {
+            this.onBodyHorizontalScroll();
+            this.onBodyVerticalScroll();
+            clearTimeout(this.scrollTimeout);
+            this.scrollTimeout = null;
+        }, 333);
     }
 
     private onBodyHorizontalScroll(): void {

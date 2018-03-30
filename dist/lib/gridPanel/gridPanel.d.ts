@@ -83,6 +83,7 @@ export declare class GridPanel extends BeanStub {
     private pinningRight;
     private pinningLeft;
     private useAnimationFrame;
+    private scrollTimeout;
     agWire(loggerFactory: LoggerFactory): void;
     getVScrollPosition(): {
         top: number;

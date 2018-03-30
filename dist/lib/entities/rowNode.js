@@ -326,8 +326,9 @@ var RowNode = (function () {
             for (var i = 0; i < this.childrenAfterGroup.length; i++) {
                 var child = this.childrenAfterGroup[i];
                 // skip non-selectable nodes to prevent inconsistent selection values
-                if (!child.selectable)
+                if (!child.selectable) {
                     continue;
+                }
                 var childState = child.isSelected();
                 switch (childState) {
                     case true:
@@ -517,8 +518,9 @@ var RowNode = (function () {
         });
     };
     RowNode.prototype.selectThisNode = function (newValue) {
-        if (!this.selectable || this.selected === newValue)
+        if (!this.selectable || this.selected === newValue) {
             return false;
+        }
         this.selected = newValue;
         if (this.eventService) {
             this.dispatchLocalEvent(this.createLocalRowEvent(RowNode.EVENT_ROW_SELECTED));

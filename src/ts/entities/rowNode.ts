@@ -272,7 +272,7 @@ export class RowNode implements IEventEmitter {
     private checkRowSelectable() {
         let isRowSelectableFunc = this.gridOptionsWrapper.getIsRowSelectableFunc();
         let shouldInvokeIsRowSelectable = isRowSelectableFunc && _.exists(this);
-        this.setRowSelectable(shouldInvokeIsRowSelectable ? isRowSelectableFunc(this) : true)
+        this.setRowSelectable(shouldInvokeIsRowSelectable ? isRowSelectableFunc(this) : true);
     }
 
     public setRowSelectable(newVal: boolean) {
@@ -512,7 +512,7 @@ export class RowNode implements IEventEmitter {
                 let child = this.childrenAfterGroup[i];
 
                 // skip non-selectable nodes to prevent inconsistent selection values
-                if (!child.selectable) continue;
+                if (!child.selectable) { continue; }
 
                 let childState = child.isSelected();
                 switch (childState) {
@@ -727,7 +727,7 @@ export class RowNode implements IEventEmitter {
     }
 
     public selectThisNode(newValue: boolean): boolean {
-        if(!this.selectable || this.selected === newValue) return false;
+        if(!this.selectable || this.selected === newValue) { return false; }
 
         this.selected = newValue;
 

@@ -59,7 +59,7 @@ export abstract class BaseFilterWrapperComp<M, F extends FloatingFilterChange, P
 
     private onColumnHover(): void {
         let isHovered = this.columnHoverService.isHovered(this.column);
-        _.addOrRemoveCssClass(this.getGui(), 'ag-column-hover', isHovered)
+        _.addOrRemoveCssClass(this.getGui(), 'ag-column-hover', isHovered);
     }
 
     abstract onParentModelChanged(parentModel: M): void;
